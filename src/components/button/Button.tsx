@@ -7,7 +7,7 @@ import {
   ButtonVariantKey,
   ButtonColorSchemeKey,
 } from "@/src/constants/buttons";
-import { Text } from "../../typography/Text";
+import { Text } from "../typography/Text";
 
 interface ButtonProps extends PressableProps {
   variant?: ButtonVariantKey;

@@ -8,7 +8,7 @@ export default function Index() {
         Resimator LMS
       </Text>
       <TouchableOpacity className="bg-blue-500 rounded px-3 py-2 mt-5">
-        <Link href="/home/admin" className="text-white text-xl font-medium">Log in</Link>
+        <Link href="/dashboard/page" className="text-white text-xl font-medium">Log in</Link>
       </TouchableOpacity>
     </View>
   );

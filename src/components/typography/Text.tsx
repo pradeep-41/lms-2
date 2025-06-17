@@ -15,8 +15,8 @@ import {
   LetterSpacingKey,
   TextColorKey,
 } from "../../constants/typography";
-import { ThemeColors } from "../../styles/theme";
 import { TypographyVariant, typographyVariants } from "./typographyVariants";
+import { ThemeColors } from '../../styles/theme';
 
 interface Props extends React.ComponentProps<typeof RNText> {
   variant?: TypographyVariant;
