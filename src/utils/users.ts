@@ -1,4 +1,4 @@
-import { Users } from "../types/users";
+import { Users } from "../types/users.types";
 
 
 export const presentUsers: Users[] =  [
@@ -23,7 +23,7 @@ export const presentUsers: Users[] =  [
     {
         id: 4,
         fullname: "Dilip Bishowkarma",
-        isActive: true,
+        isActive: false,
         isFromOffice: true
     },
     {
@@ -149,13 +149,13 @@ export const presentUsers: Users[] =  [
     {
         id: 25,
         fullname: "Hricha Sharma",
-        isActive: true,
+        isActive: false,
         isFromOffice: false
     },
     {
         id: 26,
         fullname: "Avash Rayamajhi",
-        isActive: true,
+        isActive: false,
         isFromOffice: false
     },
     {
@@ -167,7 +167,7 @@ export const presentUsers: Users[] =  [
     {
         id: 28,
         fullname: "Binu Manandhar",
-        isActive: true,
+        isActive: false,
         isFromOffice: false
     }
 ]

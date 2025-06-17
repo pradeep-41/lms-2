@@ -1,12 +1,11 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-// import PresentUsers from '@/src/components/PresentUsers'
+import { View } from "react-native";
+import React from "react";
+import DashboardContent from "../../../components/dashboardItems/DashboardContent";
 
 export default function page() {
   return (
-    <View className='flex-1'>
-      <Text>dashboard page</Text>
-      {/* <PresentUsers /> */}
+    <View className="flex-1 ">
+      <DashboardContent />
     </View>
-  )
+  );
 }
