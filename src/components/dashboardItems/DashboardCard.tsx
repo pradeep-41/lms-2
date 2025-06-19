@@ -1,32 +1,56 @@
 import React from "react";
 import { Box } from "../Box";
 import { Text } from "../typography/Text";
-import { View } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 
 type CardProps = {
   title: string;
   buttonLabels?: string[];
+  onPress?: () => void;
 };
 
-const DashboardCard = ({ title, buttonLabels = [] }: CardProps) => {
+const DashboardCard = ({ title, buttonLabels = [], onPress }: CardProps) => {
   return (
-    <Box
-      variant="center"
-      className="border border-gray-400 my-2 mx-3 p-3 rounded-lg">
-      <Text variant="button" className="mb-2">
-        {title}
-      </Text>
-      <View className="flex-row flex-wrap justify-center">
-        {buttonLabels.map((label, index) => (
-          <Text
-            key={index}
-            variant="small"
-            className="border border-gray-500 px-3 py-1 m-1 rounded">
-            {label}
-          </Text>
-        ))}
-      </View>
-    </Box>
+    <TouchableOpacity activeOpacity={0.9} onPress={onPress} disabled={!onPress}>
+      <Box
+        variant="center"
+        className="border border-gray-300 bg-white shadow-sm my-2 mx-3 p-4 rounded-lg"
+      >
+        <Text variant="button" className="mb-3 text-gray-800 font-semibold">
+          {title}
+        </Text>
+        
+        {buttonLabels.length > 0 && (
+          <View className="flex-row flex-wrap justify-center">
+            {buttonLabels.map((label, index) => (
+              <View 
+                key={index}
+                className={`border ${
+                  index % 3 === 0 
+                    ? 'border-blue-500 bg-blue-50' 
+                    : index % 2 === 0 
+                      ? 'border-green-500 bg-green-50' 
+                      : 'border-purple-500 bg-purple-50'
+                } px-3 py-1.5 m-1 rounded-full`}
+              >
+                <Text 
+                  variant="small" 
+                  className={
+                    index % 3 === 0 
+                      ? 'text-blue-700' 
+                      : index % 2 === 0 
+                        ? 'text-green-700' 
+                        : 'text-purple-700'
+                  }
+                >
+                  {label}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
+      </Box>
+    </TouchableOpacity>
   );
 };
 
