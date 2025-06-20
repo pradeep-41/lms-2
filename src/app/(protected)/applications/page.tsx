@@ -4,7 +4,7 @@ import { ApplicationsLists } from '../../../components/applicationsItems/Applica
 
 export default function page() {
   return (
-    <View className='flex-1 justify-center bg-white'>
+    <View className='flex-1 '>
       <ApplicationsLists />
     </View>
   )

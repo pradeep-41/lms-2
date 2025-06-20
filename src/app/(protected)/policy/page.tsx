@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
+import { PoliciesScreen } from '../../../components/policy/PoliciesScreen';
 
 export default function page() {
   return (
     <View>
-      <Text>policy page</Text>
+<PoliciesScreen />
     </View>
   )
 }

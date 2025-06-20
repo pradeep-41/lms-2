@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import React from "react";
 
 const LeaveReq = () => {
@@ -9,11 +9,10 @@ const LeaveReq = () => {
         <Text></Text>
         <Text></Text>
       </View>
-<View>
-  <Text>Date &  Time</Text>
-  <Input> </Input>
-</View>
-
+      <View>
+        <Text>Date & Time</Text>
+        <TextInput />
+      </View>
     </View>
   );
 };

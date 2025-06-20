@@ -9,7 +9,7 @@ initials: React.ReactNode;
 user: Users;
 }
 
-export const MyModal = ({isModalVisible,toggleModal,initials,user }: ModalProps) => {
+export const UserModal = ({isModalVisible,toggleModal,initials,user }: ModalProps) => {
   return (
     <Modal
       visible={isModalVisible}

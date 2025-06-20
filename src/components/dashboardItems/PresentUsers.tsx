@@ -1,157 +1,80 @@
 import React, { useState } from "react";
-import {
-  View,
-  FlatList,
-  TouchableOpacity,
-  Platform,
-  useWindowDimensions,
-} from "react-native";
+import { View, FlatList, Platform, TouchableOpacity, Text } from "react-native";
 import { presentUsers } from "../../utils/users";
-import { Text } from "../typography/Text";
-import { Users } from "../../types/users.types";
-import { LeaveData } from "./LeaveData";
-import DashboardCard from "./DashboardCard";
-import { Box } from "../Box";
-import { MyModal } from "./MyModal";
-import { HolidaysDashboard } from "./HolidaysDashboard";
+import { ChangeStatus } from "./ChangeStatus";
+import { FooterComponent } from "./FooterComponent";
+import { UserSection } from "./UserSection";
+import { Users } from "@/src/types/users.types";
 
-// Helper functions
-const getFirstName = (fullName: string) => fullName.split(" ")[0];
-const getInitials = (fullName: string) =>
-  fullName
-    .split(" ")
-    .map((name) => name[0])
-    .join("")
-    .toUpperCase();
-
-// UserCard Component
-const UserCard: React.FC<{ user: Users }> = ({ user }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const firstName = getFirstName(user.fullname);
-  const initials = getInitials(user.fullname);
-
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
-  };
-
-  return (
-    <>
-      <TouchableOpacity onPress={toggleModal} activeOpacity={0.7}>
-        <View className="items-center mb-3 p-2">
-          <View className="w-14 h-14 rounded-full bg-blue-100 justify-center items-center mb-1.5">
-            <Text className="text-blue-700 font-bold text-base">
-              {initials}
-            </Text>
-          </View>
-          <Box variant="center">
-            <Text>{firstName}</Text>
-          </Box>
-        </View>
-      </TouchableOpacity>
-      <MyModal
-        isModalVisible={isModalVisible}
-        toggleModal={toggleModal}
-        initials={initials}
-        user={user}
-      />
-    </>
-  );
-};
-
-// UserSection Component
-const UserSection: React.FC<{
-  title: string;
-  data: Users[];
-}> = ({ title, data }) => {
-  const { width } = useWindowDimensions();
-  const cardWidth = (width - 32) / 3;
-
-  return (
-    <View className="mb-5">
-      <Text className="text-lg font-semibold mb-3 px-2">{`${title} (${data.length})`}</Text>
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={3}
-        renderItem={({ item }) => (
-          <View style={{ width: cardWidth }}>
-            <UserCard user={item} />
-          </View>
-        )}
-        scrollEnabled={false}
-        contentContainerStyle={{ paddingHorizontal: 4 }}
-      />
-    </View>
-  );
-};
-
-// Main Component
 const PresentUsers: React.FC = () => {
-  const officeUsers = presentUsers.filter((u) => u.isFromOffice);
-  const remoteUsers = presentUsers.filter((u) => !u.isFromOffice);
+  const [showOfficeUsers, setShowOfficeUsers] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
-  return (
-    <FlatList
-      className="flex-1 px-2"
-      contentContainerStyle={{ paddingBottom: 20, paddingHorizontal: 10 }}
-      data={[
-        { title: "In Office", data: officeUsers },
-        { title: "Working Remotely", data: remoteUsers },
-      ]}
-      keyExtractor={(item) => item.title}
-      ListFooterComponent={<FooterComponent />}
-      showsVerticalScrollIndicator={false}
-      removeClippedSubviews={Platform.OS === "android"}
-      initialNumToRender={10}
-      maxToRenderPerBatch={10}
-      windowSize={10}
-      renderItem={({ item }) => (
-        <UserSection title={item.title} data={item.data} />
-      )}
-    />
+  // Sort users alphabetically
+  const sortAlphabetically = (users:Users[]) =>
+    [...users].sort((a, b) => a.fullname.localeCompare(b.fullname));
+
+  const officeUsers = sortAlphabetically(
+    presentUsers.filter((u) => u.isFromOffice)
   );
-};
+  const remoteUsers = sortAlphabetically(
+    presentUsers.filter((u) => !u.isFromOffice)
+  );
 
-// Footer Component
-const FooterComponent = () => {
+  const currentUsers = showOfficeUsers ? officeUsers : remoteUsers;
+
+  // Slice users based on showAll state
+  const usersToShow = showAll ? currentUsers : currentUsers.slice(0, 6);
+
+  const toggleData = [
+    {
+      title: showOfficeUsers ? "In Office" : "Working Remotely",
+      data: usersToShow,
+    },
+  ];
+
   return (
-    <View className="mt-4 px-2">
-      <LeaveData title="On Leave" />
-      <LeaveData title="Half-Day Leave" emptyMessage="No half-day leaves today" />
-      <LeaveData
-        title="On Vacation"
-        data={[
-          { id: "1", name: "John Doe" },
-          { id: "2", name: "Jane Smith" },
-        ]}
+    <View style={{ flex: 1 }}>
+      <FlatList
+        className="flex-1 px-[5%]"
+        contentContainerStyle={{ paddingBottom: 20, paddingHorizontal: 10 }}
+        data={toggleData}
+        ListHeaderComponent={
+          <ChangeStatus
+            showOfficeUsers={showOfficeUsers}
+            setShowOfficeUsers={(val) => {
+              setShowOfficeUsers(val);
+              setShowAll(false); // reset showAll on toggle
+            }}
+          />
+        }
+        keyExtractor={(item) => item.title}
+        ListFooterComponent={
+          <>
+            {currentUsers.length > 6 && (
+              <TouchableOpacity
+                onPress={() => setShowAll(!showAll)}
+                className="bg-blue-600 rounded py-2 my-3"
+              >
+                <Text className="text-center text-white font-medium">
+                  {showAll ? "Show Less" : "Show More"}
+                </Text>
+              </TouchableOpacity>
+            )}
+            <FooterComponent />
+          </>
+        }
+        alwaysBounceVertical
+        removeClippedSubviews={Platform.OS === "android"}
+        initialNumToRender={10}
+        maxToRenderPerBatch={10}
+        windowSize={10}
+        renderItem={({ item }) => (
+          <UserSection title={item.title} data={item.data} />
+        )}
       />
-
-      <View className="mt-4 gap-3">
-        {/* <DashboardCard
-          title="Festive Holidays"
-          buttonLabels={["0 Days Available", "16 Days Celebrated"]}
-        />
-        <DashboardCard
-          title="Casual/Sick Leave"
-          buttonLabels={[
-            "0 Days Available",
-            "0 Days Requested",
-            "0 Days Approved",
-          ]}
-        /> */}
-        <DashboardCard
-          title="Paid Leave"
-          buttonLabels={[
-            "0 Days Available",
-            "0 Days Taken",
-            "0 Days Remaining",
-          ]}
-        />
-        <HolidaysDashboard />
-      </View>
     </View>
   );
 };
-
 
 export default PresentUsers;

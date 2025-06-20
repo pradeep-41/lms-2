@@ -81,11 +81,7 @@ export const presentUsers: Users[] = [
         fullname: "Barun Bashyal",
         isFromOffice: false
     },
-    {
-        id: 17,
-        fullname: "Yashwindar Singh",
-        isFromOffice: false
-    },
+
     {
         id: 18,
         fullname: "Bishal Debb Pande",

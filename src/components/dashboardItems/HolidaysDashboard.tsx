@@ -1,53 +1,13 @@
 import React, { useState } from "react";
-import { View, ScrollView, TouchableOpacity, Dimensions } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { Text } from "../typography/Text";
-import { Box } from "../Box";
-import { LineChart } from "react-native-chart-kit";
 
 export const HolidaysDashboard = () => {
   const [showAllHolidays, setShowAllHolidays] = useState(false);
   const [showAllNotices, setShowAllNotices] = useState(false);
 
-  const chartData = {
-    labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    datasets: [
-      {
-        data: [20, 25, 30, 35, 40, 49, 0, 0, 0, 0, 10, 0],
-        color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
-        strokeWidth: 2,
-      },
-    ],
-  };
 
-  const chartConfig = {
-    backgroundColor: "#ffffff",
-    backgroundGradientFrom: "#ffffff",
-    backgroundGradientTo: "#ffffff",
-    decimalPlaces: 0,
-    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    style: {
-      borderRadius: 16,
-    },
-    propsForDots: {
-      r: "4",
-      strokeWidth: "2",
-      stroke: "#3B82F6",
-    },
-  };
+
 
   const holidayData = [
     {
@@ -92,8 +52,8 @@ export const HolidaysDashboard = () => {
   ];
 
   return (
-    <>
-      <Box className="bg-white rounded-xl p-5 mb-5 ">
+    <View className="flex-1  w-full">
+      <View className="bg-white rounded-xl p-5 mb-5 border border-gray-300">
         <View className="flex-row justify-between items-center mb-4">
           <Text className="text-xl font-bold text-gray-800">
             Total Holidays & Leaves
@@ -101,22 +61,6 @@ export const HolidaysDashboard = () => {
           <Text className="text-3xl font-bold text-blue-600">49</Text>
         </View>
 
-        {/* Line Chart */}
-        <View className="mb-6">
-          <ScrollView horizontal={true}>
-            <LineChart
-              data={chartData}
-              width={Dimensions.get("window").width * 1.5}
-              height={200}
-              chartConfig={chartConfig}
-              bezier
-              style={{
-                borderRadius: 16,
-                paddingRight: 30,
-              }}
-            />
-          </ScrollView>
-        </View>
 
         <View className="space-y-4">
           {[
@@ -147,18 +91,18 @@ export const HolidaysDashboard = () => {
           ].map((item, index) => (
             <View key={index} className="flex-row items-center justify-between">
               <View
-                className={`${item.color} ${item.textColor} rounded-full px-3 py-1`}>
+                className={`${item.color} ${item.textColor} rounded-full px-3 my-1 py-1`}>
                 <Text className="text-sm font-medium">{item.label}</Text>
               </View>
               <Text className="text-lg font-semibold">{item.count}</Text>
             </View>
           ))}
         </View>
-      </Box>
+      </View>
 
       {/* Upcoming Holidays Section */}
-      <Box className="bg-white rounded-xl p-5 mb-5">
-        <View className="flex-row justify-between items-center mb-4">
+      <View className="bg-white rounded-xl p-5 mb-5 border border-gray-300">
+        <View className="flex-row justify-between items-center mb-4 ">
           <Text className="text-xl font-bold text-gray-800">
             Upcoming Holidays
           </Text>
@@ -192,10 +136,10 @@ export const HolidaysDashboard = () => {
             </View>
           )
         )}
-      </Box>
+      </View>
 
       {/* Notice Board Section */}
-      <Box className="bg-white rounded-xl p-5 mb-5">
+      <View className="bg-white rounded-xl p-5 mb-5 border border-gray-300">
         <View className="flex-row justify-between items-center mb-4">
           <Text className="text-xl font-bold text-gray-800">Notice Board</Text>
           <TouchableOpacity onPress={() => setShowAllNotices(!showAllNotices)}>
@@ -217,7 +161,7 @@ export const HolidaysDashboard = () => {
             </View>
           )
         )}
-      </Box>
-    </>
+      </View>
+    </View>
   );
 };

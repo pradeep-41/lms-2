@@ -1,5 +1,4 @@
 import React from "react";
-import { Box } from "../Box";
 import { Text } from "../typography/Text";
 import { View, TouchableOpacity } from "react-native";
 
@@ -11,10 +10,9 @@ type CardProps = {
 
 const DashboardCard = ({ title, buttonLabels = [], onPress }: CardProps) => {
   return (
-    <TouchableOpacity activeOpacity={0.9} onPress={onPress} disabled={!onPress}>
-      <Box
-        variant="center"
-        className="border border-gray-300 bg-white shadow-sm my-2 mx-3 p-4 rounded-lg"
+    <TouchableOpacity  activeOpacity={0.9} onPress={onPress} disabled={!onPress}>
+      <View
+        className="border border-gray-300 bg-white my-1 p-4 rounded-lg"
       >
         <Text variant="button" className="mb-3 text-gray-800 font-semibold">
           {title}
@@ -49,7 +47,7 @@ const DashboardCard = ({ title, buttonLabels = [], onPress }: CardProps) => {
             ))}
           </View>
         )}
-      </Box>
+      </View>
     </TouchableOpacity>
   );
 };

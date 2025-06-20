@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box } from '../Box';
 import { Text } from '../typography/Text';
 import { View, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -21,12 +20,13 @@ export const LeaveData = ({
 }: LeaveProps) => {
   return (
     <TouchableOpacity 
+    className='w-full'
       activeOpacity={0.9} 
       onPress={onPress}
       disabled={!onPress}
     >
-      <Box className="border border-gray-200 rounded-lg m-2 mx-3 p-4 bg-white shadow-xs">
-        <View className="flex-row justify-between items-center mb-3">
+      <View className=" border border-gray-200 rounded-lg my-2 p-4 bg-white shadow-xs w-full">
+        <View className="flex-row justify-between items-center mb-3 ">
           <Text className="font-semibold text-gray-800 text-base">
             {title}
           </Text>
@@ -49,13 +49,13 @@ export const LeaveData = ({
             ))}
           </View>
         ) : (
-          <View className="bg-gray-50 rounded-md p-3 border border-gray-100">
+          <View className="bg-gray-50 rounded-md p-3 border border-gray-100 ">
             <Text className="text-gray-500 text-sm text-center">
               {emptyMessage}
             </Text>
           </View>
         )}
-      </Box>
+      </View>
     </TouchableOpacity>
   );
 };
